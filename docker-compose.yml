@@ -1,0 +1,39 @@
+version: '3'
+services:
+  db:
+    build: db
+    environment:
+      - DATADIR=/var/lib/mysql
+      - MYSQL_ROOT_PASSWORD=redmine
+      - MYSQL_DATABASE=redmine
+      - MYSQL_USER=redmine
+      - MYSQL_PASSWORD=redmine
+      - TZ=Asia/Tokyo
+    ports:
+      - "50104:3306"
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - db-data:/var/lib/mysql
+  app:
+    image: redmine:3.3.2-passenger
+    depends_on:
+      - db
+    environment:
+      - REDMINE_DB_MYSQL=db
+      - MYSQL_ENV_MYSQL_USER=redmine
+      - MYSQL_ENV_MYSQL_PASSWORD=redmine
+      - MYSQL_ENV_MYSQL_DATABASE=redmine
+      - REDMINE_DB_ENCODING=utf8mb4
+      - TZ=Asia/Tokyo
+      - http_proxy=$http_proxy
+      - https_proxy=$https_proxy
+    ports:
+      - "50004:3000"
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - app-data:/usr/src/redmine/files
+volumes:
+  db-data: {}
+  app-data: {}
