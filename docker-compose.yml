@@ -11,7 +11,7 @@ services:
       - TZ=Asia/Tokyo
     ports:
       - "50104:3306"
-    restart: always
+    restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - db-data:/var/lib/mysql
@@ -30,7 +30,7 @@ services:
       - https_proxy=$https_proxy
     ports:
       - "50004:3000"
-    restart: always
+    restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - app-data:/usr/src/redmine/files

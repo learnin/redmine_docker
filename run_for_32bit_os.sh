@@ -14,7 +14,7 @@ docker container run \
   -e 'TZ=Asia/Tokyo' \
   --name redminedocker_db_1 \
   -p 50104:3306 \
-  --restart always \
+  --restart unless-stopped \
   -v /etc/localtime:/etc/localtime:ro \
   -v redminedocker_db-data:/var/lib/mysql \
   redminedocker_db
@@ -36,7 +36,7 @@ docker container run \
   --link redminedocker_db_1:db \
   --name redminedocker_app_1 \
   -p 50004:3000 \
-  --restart always \
+  --restart unless-stopped \
   -v /etc/localtime:/etc/localtime:ro \
   -v redminedocker_app-data:/usr/src/redmine/files \
   redmine:3.3.2-passenger
