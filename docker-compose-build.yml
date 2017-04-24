@@ -1,6 +1,7 @@
 version: '3'
 services:
   db:
+    build: db
     environment:
       - DATADIR=/var/lib/mysql
       - MYSQL_ROOT_PASSWORD=redmine
@@ -8,7 +9,6 @@ services:
       - MYSQL_USER=redmine
       - MYSQL_PASSWORD=redmine
       - TZ=Asia/Tokyo
-    image: learnin/redmine_db
     ports:
       - "50104:3306"
     restart: unless-stopped
