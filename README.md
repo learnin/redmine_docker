@@ -39,8 +39,8 @@ export HTTPS_PROXY=$https_proxy
 export no_proxy=`docker-machine ip default`
 export NO_PROXY=$no_proxy
 
-docker-compose build
-docker-compose up -d
+docker-compose -f docker-compose-build.yml build
+docker-compose -f docker-compose-build.yml up -d
 ```
 ### When not using Docker Compose(e.g. Windows 32bit)
 ```shell
