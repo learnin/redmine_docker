@@ -17,7 +17,7 @@ docker container run \
   --restart unless-stopped \
   -v /etc/localtime:/etc/localtime:ro \
   -v redminedocker_db-data:/var/lib/mysql \
-  learnin/redmine_db
+  learnin/redmine-db
 
 # app-data volume
 docker volume create --name redminedocker_app-data
