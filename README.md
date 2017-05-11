@@ -26,6 +26,38 @@ docker-machine scp run_for_32bit_os.sh default:/tmp/redmine_run_for_32bit_os.sh
 docker-machine ssh default "export http_proxy=$http_proxy; export https_proxy=$https_proxy; sh /tmp/redmine_run_for_32bit_os.sh; rm -f /tmp/redmine_run_for_32bit_os.sh"
 ```
 
+## How to backup
+```shell
+docker container run \
+  --rm \
+  -v redminedocker_db-data:/target/db-data \
+  -v redminedocker_app-data:/target/app-data \
+  -v $(pwd):/backup \
+  ubuntu tar cvzfp /backup/redmine_backup.tar.gz /target
+```
+
+If you use docker-machine, execute the above command in docker-machine, and copy backup.tar.gz from docker-machine to host machine with the following command.
+
+```shell
+docker-machine scp default:~/redmine_backup.tar.gz .
+```
+
+## How to restore
+```shell
+docker container run \
+  --rm \
+  -v redminedocker_db-data:/target/db-data \
+  -v redminedocker_app-data:/target/app-data \
+  -v $(pwd):/backup \
+  ubuntu bash -c "cd /target && tar xvzfp /backup/redmine_backup.tar.gz --strip 1"
+```
+
+If you use docker-machine, execute the following command to copy backup.tar.gz from host machine to docker-machine, and execute the above command in docker-machine.
+
+```shell
+docker-machine scp redmine_backup.tar.gz default:~/
+```
+
 # For developers
 
 ## How to build and run
